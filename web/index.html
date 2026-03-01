@@ -34,6 +34,17 @@
 
   <!-- sql.js for Drift web database (must load before Flutter) -->
   <script src="https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/sql-wasm.js"></script>
+  <script>
+    // Patch initSqlJs to locate .wasm file from CDN
+    var _originalInitSqlJs = initSqlJs;
+    initSqlJs = function(config) {
+      config = config || {};
+      config.locateFile = function(file) {
+        return 'https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/' + file;
+      };
+      return _originalInitSqlJs(config);
+    };
+  </script>
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
