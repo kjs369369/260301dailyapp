@@ -7,7 +7,13 @@ FLUTTER_URL="https://storage.googleapis.com/flutter_infra_release/releases/stabl
 echo "=== Installing Flutter SDK ${FLUTTER_VERSION} ==="
 curl -sL "$FLUTTER_URL" -o flutter.tar.xz
 tar xf flutter.tar.xz
+
+# Fix git safe directory issue in Vercel build environment
+git config --global --add safe.directory /vercel/path0/flutter
+git config --global --add safe.directory /vercel/path0
+
 export PATH="$PWD/flutter/bin:$PATH"
+export FLUTTER_ROOT="$PWD/flutter"
 
 echo "=== Flutter version ==="
 flutter --version
